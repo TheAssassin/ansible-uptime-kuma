@@ -441,6 +441,9 @@ def run(api, params, result):
 
 
 def main():
+    if not HAS_UPTIME_KUMA_API:
+        module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
+
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
@@ -554,9 +557,6 @@ def main():
 
     module = AnsibleModule(module_args)
     params = module.params
-
-    if not HAS_UPTIME_KUMA_API:
-        module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
 
     api = UptimeKumaApi(params["api_url"], timeout=params["api_timeout"], headers=params["api_headers"], ssl_verify=params["api_ssl_verify"], wait_events=params["api_wait_events"])
     api_token = params.get("api_token")
