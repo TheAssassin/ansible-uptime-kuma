@@ -355,7 +355,8 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
 from uptime_kuma_api import UptimeKumaApi, MonitorType
 
 
-def run(api, params, result): if not params["accepted_statuscodes"]:
+def run(api, params, result):
+    if not params["accepted_statuscodes"]:
         params["accepted_statuscodes"] = ["200-299"]
 
     if not params["databaseConnectionString"]:
