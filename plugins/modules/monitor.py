@@ -352,15 +352,10 @@ from ansible_collections.lucasheld.uptime_kuma.plugins.module_utils.common impor
     common_module_args, get_proxy_by_host_port, get_notification_by_name, get_monitor_by_name, clear_unset_params, \
     get_docker_host_by_name
 
-try:
-    from uptime_kuma_api import UptimeKumaApi, MonitorType
-    HAS_UPTIME_KUMA_API = True
-except ImportError:
-    HAS_UPTIME_KUMA_API = False
+from uptime_kuma_api import UptimeKumaApi, MonitorType
 
 
-def run(api, params, result):
-    if not params["accepted_statuscodes"]:
+def run(api, params, result): if not params["accepted_statuscodes"]:
         params["accepted_statuscodes"] = ["200-299"]
 
     if not params["databaseConnectionString"]:
@@ -441,9 +436,6 @@ def run(api, params, result):
 
 
 def main():
-    if not HAS_UPTIME_KUMA_API:
-        module.fail_json(msg=missing_required_lib("uptime_kuma_api"))
-
     module_args = dict(
         id=dict(type="int"),
         name=dict(type="str"),
